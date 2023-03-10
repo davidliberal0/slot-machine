@@ -16,9 +16,17 @@ symbol_count = {
     "D": 8
 }
 
+# important -------------------------
+# Difference between row and column
+# ROW -------
+# Column |||||||||
+
+
+
 # function for slot machine outcome
 def get_slot_machine_spin(rows, cols, symbols):
     all_symbols = []
+    # append a number of symbols into the list based on their values
     for symbol, symbol_count in symbols.items():
         for _ in range(symbol_count):
             all_symbols.append(symbol)
@@ -38,6 +46,18 @@ def get_slot_machine_spin(rows, cols, symbols):
         columns.append(column)
 
     return columns
+
+# function for displaying the slot machine
+def print_slot_machine(columns):
+    # transpose the matrix
+    for row in range(len(columns[0])):
+        for i, column in enumerate(columns):
+            if i != len(columns) - 1:
+                print(column[row], end=" | ")
+            else:
+                print(column[row], end= "")
+        print()
+
 
 # function to collect the deposit as user input
 def deposit():
@@ -76,7 +96,7 @@ def get_number_of_lines():
 # function for collecting the betting wager as user input
 def get_bet():
     while True:
-        wager = input("What would like to bet? $")
+        wager = input("What would like to bet on each line? $")
         # validate user input - make sure it is a number
         if wager.isdigit():
             wager = int(wager) # convert the user input to an integer
@@ -105,7 +125,8 @@ def main():
             break
     print(f"You are betting ${bet} on {lines} lines. Total bet is equal to: ${total_bet}")
 
-    print(balance, lines)
+    slots = get_slot_machine_spin(ROWS, COLS, symbol_count)
+    print_slot_machine(slots)
 
 
 main()
